@@ -1,0 +1,231 @@
+<style>
+  table {
+    width: 90%;
+    margin:1rem auto;
+ }
+
+ .contenedor {
+    display: flex;
+    flex-direction: column;
+    margin:1rem auto;
+    max-width: 600px;
+    box-shadow: -1px 3px 66px 0px rgba(0,0,0,0.75);
+    padding: 1rem;
+  }   
+  .custom-logo{
+    margin-left: 40% !important;
+  }
+  /* Responsive Styles */
+  @media screen and (max-width: 767px) {
+    .card-container > *:not(.circle-link) ,
+    .terminal {
+      width: 100%;
+    }
+    .card:not(.highlight-card) {
+      height: 16px;
+      margin: 8px 0;
+    }
+    .card.highlight-card span {
+      margin-left: 72px;
+    }
+    svg#rocket-smoke {
+      right: 120px;
+      transform: rotate(-5deg);
+    }
+  }
+  @media screen and (max-width: 575px) {
+    div .custom-form {
+      margin-left: 10% !important;
+    }
+    svg#rocket-smoke {
+      display: none;
+      visibility: hidden;
+    }
+  }
+  @media screen and (max-width: 998px) {
+    .custom-logo{
+      margin-left: 38% !important;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .custom-logo{
+      margin-left: 30% !important;
+    }
+  }
+  @media screen and (max-width: 508px) {
+    .custom-logo{
+      margin-left: 27% !important;
+    }
+  }
+</style>
+
+<div class="content" style="margin-bottom: 50px" role="main">
+  <div class="" style="height:45px;background: #003a64;"></div>
+  <div class="container">
+    <div class="container-fluid">
+      <div class="mx-auto mt-3">
+        <div class="row">
+        <!--style="margin-left:402px;" -->
+        <img 
+        class="img-logo custom-logo" 
+        src='/assets/logo-sis.png' 
+        width="200"
+        height="70" 
+        alt='image'>
+        </div>
+      </div>
+      <!-- <h3 class="text-center mt-1">Prueba de desarrollo SmartSoft</h3> -->
+      <p class="text-center mt-3"
+       style="box-shadow: 2px 26px 56px 0 rgba(0,0,0,.3); padding: 2px">
+       Somos una compañía con soluciones tecnológicas que facilitan el desarrollo de procesos y metodologías, asegurando 
+       <br/>la calidad y efectividad de sus servicios.
+      </p>
+     </div>
+
+     <div class="container-fluid mt-2">
+      <div class="row mt-2">
+          
+          <div class="col-lg-3 col-sm-12 col-md-3 mt-2">
+            <div class="row">
+              <!--  style="width:370px; height:358px;" -->
+              <div class="col-xs-12 col-sm-12 example-col card" 
+                style="height: 449px   !important;
+                border: 2px solid rgba(0,0,0,.125);" >
+                <h5 class="mt-3" style="margin-left: 1px;margin-top: 16px !important;">Registros Datos</h5>
+
+                <form [formGroup]="formOrden" (ngSubmit)="registrarDatos($event)">
+                   <label for="state">State:</label>
+                    <input 
+                      id="state"
+                      type="text" 
+                      formControlName="State"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.State.errors }"
+                    > <!-- accept=".csv, text/xml, application/xml, application/vnd.ms-excel" -->
+                  <div *ngIf="submitted && f.State.errors" class="invalid-feedback">
+                    <div *ngIf="f.State.errors.required">Debe ingresar el Campo de State</div>
+                  </div>
+
+                   <label for="number">Number:</label>
+                    <input 
+                      id="number"
+                      type="text" 
+                      formControlName="Number"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.Number.errors }"
+                    > <!-- accept=".csv, text/xml, application/xml, application/vnd.ms-excel" -->
+                  <div *ngIf="submitted && f.Number.errors" class="invalid-feedback">
+                    <div *ngIf="f.Number.errors.required">Debe ingresar el Campo de Number</div>
+                  </div>
+
+                  <label for="title">Title:</label>
+                    <input 
+                      id="title"
+                      type="text" 
+                      formControlName="Title"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.Title.errors }"
+                    > <!-- accept=".csv, text/xml, application/xml, application/vnd.ms-excel" -->
+                  <div *ngIf="submitted && f.Title.errors" class="invalid-feedback">
+                    <div *ngIf="f.Title.errors.required">Debe ingresar el Campo de Title</div>
+                  </div>
+                  <button 
+                    class="input-group-text upload" 
+                    style="margin-top: 21px;
+                      margin-left: 13px;">Subir Archivo</button>
+                </form>
+                <div 
+                    *ngIf="errorFormulario" 
+                    class="alert alert-success alert-dismissible mt-4"
+                    style="font-size: 13px;">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <!-- <strong>Atención! </strong> -->{{msg}}
+                </div>
+               <!--  <span class="input-group-text upload" (click)="uploadFiles()">Upload</span> -->
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="col-lg-8 mt-2 col-sm-12 col-md-8 col-offset-1 custom-form">
+            <div class="row">
+              <!-- style="height: auto" -->
+              <div class="col-12 card" 
+                style="height: 449px  !important;
+                border: 2px solid rgba(0,0,0,.125);"> 
+
+
+            <table 
+              class="table table-striped" 
+              [svData]="dataTable" 
+              #sv="svDataTable" 
+              [svRowsOnPage]="5" 
+              svSortBy="Created" 
+              svSortOrder="asc">
+              <thead>
+              <tr>
+                  <th>
+                    Title
+                  </th>
+                  <th>Number</th>
+                  <th>State</th>
+                  <th>
+                  <sv-default-sorter 
+                    by="Created">
+                    Created
+                  </sv-default-sorter>
+                  </th>
+                  <th>Opción</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of sv.data">
+                  <td>{{ item.Title }}</td>
+                  <td>{{ item.Number }}</td>
+                  <td >{{ item.State }}</td>
+                  <!-- class="text-right" -->
+                  <td>{{ convertFecha(item.Created) | uppercase }}</td>
+                  <td>
+                    <button 
+                      (click)="eliminarRegistro(item)"
+                      type="button" 
+                      class="btn btn-primary"
+                      style="
+                        text-align: center;
+                        height: 29px;
+                        font-size: 12px;
+                        width: 71px;" 
+                    >
+                    Eliminar
+                    </button>
+                  </td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr>
+                  <td colspan="4">
+                      <sv-bootstrap-paginator 
+                        [rowsOnPageSet]="[5]">    
+                      </sv-bootstrap-paginator>
+                  </td>
+              </tr>
+              </tfoot>
+          </table>
+              </div>
+            </div> 
+          </div>
+
+      </div>
+     </div>
+  </div>
+
+</div>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
