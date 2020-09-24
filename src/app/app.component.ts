@@ -29,6 +29,7 @@ export class AppComponent implements OnInit{
   msg:string|any = ""
   private ejecutar:boolean = false
   private parametros:Array<any> = []
+  Id:number|any = 0
 
   constructor(private formBuilder: FormBuilder,
   	private serviciosEndpointService: ServiciosEndpointService){
@@ -71,18 +72,33 @@ export class AppComponent implements OnInit{
       let datos:any
       console.log(this.formOrden.value,'values')
       datos = this.formOrden.value
-      this.serviciosEndpointService.saveData('asosaciones/',datos).toPromise().then(data => {
-        let res:object|any = data
-        if(res.code == 201){
-          this.errorFormulario = true
-          this.msg = res.msg
-          this.formOrden.reset()
-          this.obtenerListado()
-        }else {
-          this.errorFormulario = true
-          this.msg = res.msg
-        }
-      })
+      if(this.Id > 0) {
+        this.serviciosEndpointService.updateData(`asosaciones/${this.Id}/`,datos).toPromise().then(data => {
+          let res:object|any = data
+          if(res.code == 200){
+            this.errorFormulario = true
+            this.msg = res.msg
+            this.formOrden.reset()
+            this.obtenerListado()
+          }else {
+            this.errorFormulario = true
+            this.msg = res.msg
+          }
+        })
+      }else{
+        this.serviciosEndpointService.saveData('asosaciones/',datos).toPromise().then(data => {
+          let res:object|any = data
+          if(res.code == 201){
+            this.errorFormulario = true
+            this.msg = res.msg
+            this.formOrden.reset()
+            this.obtenerListado()
+          }else {
+            this.errorFormulario = true
+            this.msg = res.msg
+          }
+        })
+      }
     }
   }
 
@@ -95,6 +111,7 @@ export class AppComponent implements OnInit{
 
   /**OBTENER VALORES DROPDOWNLIST**/
   public obtenerListado() {
+     this.Id = 0
     //this.limpiarVariables()
   	this.serviciosEndpointService.getData('asosaciones/')
   	.toPromise().then(data => {
@@ -105,6 +122,7 @@ export class AppComponent implements OnInit{
   }
 
   eliminarRegistro(event) {
+     this.Id = 0
     console.log(event,'event')
     this.serviciosEndpointService.removeData(`asosaciones/${event.Id}/`)
     .toPromise().then(data => {
@@ -119,6 +137,16 @@ export class AppComponent implements OnInit{
           this.msg = res.msg
         }
       })
+  }
+
+  actualizarRegistro(event) {
+    this.Id = event.Id
+    this.formOrden = new FormGroup({
+      'State': new FormControl(event.State, Validators.required),
+      'Number': new FormControl(event.Number, Validators.required),
+      'Title': new FormControl(event.Title, Validators.required)
+    });
+    console.log(event,'event')
   }
 
 }

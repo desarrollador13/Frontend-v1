@@ -148,11 +148,13 @@
           </div>
 
           <div class="col-lg-8 mt-2 col-sm-12 col-md-8 col-offset-1 custom-form">
-            <div class="row">
+            <div class="row card"
+            style="height: 449px  !important;
+                border: 2px solid rgba(0,0,0,.125);">
               <!-- style="height: auto" -->
-              <div class="col-12 card" 
+              <!-- <div class="col-12 card" 
                 style="height: 449px  !important;
-                border: 2px solid rgba(0,0,0,.125);"> 
+                border: 2px solid rgba(0,0,0,.125);">  -->
 
 
             <table 
@@ -198,6 +200,19 @@
                     >
                     Eliminar
                     </button>
+                     <button 
+                      (click)="actualizarRegistro(item)"
+                      type="button" 
+                      class="btn btn-primary"
+                      style="
+                      margin-left: 4px;
+                        text-align: center;
+                        height: 29px;
+                        font-size: 12px;
+                        width: 82px;" 
+                    >
+                    Actualizar
+                    </button>
                   </td>
               </tr>
               </tbody>
@@ -211,7 +226,7 @@
               </tr>
               </tfoot>
           </table>
-              </div>
+              <!-- </div> -->
             </div> 
           </div>
 
